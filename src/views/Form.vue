@@ -10,7 +10,7 @@
         <el-input
           type="text"
           placeholder="Digite o nome do Pet"
-          v-model="dogs.nome"
+          v-model="dog.nome"
           maxlength="30"
           show-word-limit
         >
@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-4">
           <label> Raça:</label>
-          <select class="form-control" v-model="dogs.raca">
+          <select class="form-control" v-model="dog.raca">
             <option selected>Beagle</option>
             <option>Poodle</option>
             <option>Husk</option>
@@ -28,17 +28,17 @@
         </div>
         <div class="col-4">
           <label> Peso:</label>
-          <el-input type="number" v-model="dogs.peso" min="1" max="100">
+          <el-input type="number" v-model="dog.peso" min="1" max="100">
           </el-input>
         </div>
         <div class="col-4">
           <label> Idade:</label>
-          <el-input type="number" v-model="dogs.idade" min="0" max="30">
+          <el-input type="number" v-model="dog.idade" min="0" max="30">
           </el-input>
         </div>
       </div>
       <div class="button">
-        <el-button @click="saveDog(newDog)">Salvar</el-button>
+        <el-button @click="saveDog(dog)">Salvar</el-button>
       </div>
     </div>
     <a @click="logoff" href="#" class="text center">Home</a>
@@ -46,11 +46,11 @@
       <el-card v-for="dog in dogs" :key="dog">
         <img src="../assets/card.png" class="image" />
         <div style="padding: 2px">
-          <span>Nome:{{ dogs.nome }}</span>
+          <span>Nome:{{ dog.nome }}</span>
           <div class="bottom clearfix">
-            <span>Raça:{{ dogs.raca }} </span>
-            <span>Peso:{{ dogs.peso }} </span>
-            <span>Idade:{{ dogs.idade }} </span>
+            <span>Raça:{{ dog.raca }} </span>
+            <span>Peso:{{ dog.peso }} </span>
+            <span>Idade:{{ dog.idade }} </span>
           </div>
           <el-button
             class="button"
@@ -61,9 +61,6 @@
 
         <el-button @click="removeDog(dog)">Remover</el-button>
       </el-card>
-      <div>
-        {{ newDog }}
-      </div>
     </div>
   </div>
 </template>
@@ -74,14 +71,12 @@ export default {
   data() {
     return {
       newDog: "",
-      dogs: [
-        {
-          nome: "",
-          raca: "",
-          peso: "",
-          idade: "",
-        },
-      ],
+      dog: {
+        nome: "",
+        raca: "",
+        peso: "",
+        idade: "",
+      },
     };
   },
 
@@ -93,7 +88,7 @@ export default {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(this.dogs),
+        body: JSON.stringify(this.dog),
       }).then((response) => {
         if (response.ok === true) {
           alert("Cachorro salvo com sucesso!");

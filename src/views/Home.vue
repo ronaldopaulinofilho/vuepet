@@ -12,7 +12,7 @@
     <el-row :gutter="12">
       <el-col :span="12">
         <el-card class="card" shadow="hover">
-          <h2>Pesquisa</h2>
+          <h4>Pesquisa</h4>
           <p>
             Encontre um pet pesquisando por nome.
             <br />
@@ -26,7 +26,7 @@
       </el-col>
       <el-col :span="12">
         <el-card class="card" shadow="hover">
-          <h2>Novo Cadastro</h2>
+          <h4>Novo Cadastro</h4>
           <p>
             Não encontrou um pet? Você pode cadastrar um novo pet clicando aqui
             <br />

@@ -12,7 +12,7 @@
           <el-input
             type="text"
             placeholder="Faça uma pesquisa por nome para encontrar um pet"
-            v-model="dogs.nome"
+            v-model="filter"
           ></el-input>
 
           <div class="button">
@@ -26,11 +26,11 @@
           <el-card v-for="dog in dogs" :key="dog">
             <img src="../assets/card.png" class="image" />
             <div style="padding: 2px">
-              <span>Nome:{{ dogs.nome }}</span>
+              <span>Nome:{{ dog.nome }}</span>
               <div class="bottom clearfix">
-                <span>Raça:{{ dogs.raca }} </span>
-                <span>Peso:{{ dogs.peso }} </span>
-                <span>Idade:{{ dogs.idade }} </span>
+                <span>Raça:{{ dog.raca }} </span>
+                <span>Peso:{{ dog.peso }} </span>
+                <span>Idade:{{ dog.idade }} </span>
               </div>
               <el-button
                 class="button"
@@ -51,6 +51,7 @@ export default {
 
   data() {
     return {
+      filter: "",
       dogs: [
         {
           nome: "",

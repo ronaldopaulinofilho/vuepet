@@ -1,48 +1,71 @@
 <template>
   <div class="home">
-    <img id="logo" src="../assets/vue-dog.jpg" />
-    <img src="../assets/Vuepet.jpg" />
+    <Header
+      title="Bem vindo (a) ao Vue Pet Clinic"
+      text="A maneira mais fácil e reativa de cadastrar seus pets na web"
+    ></Header>
+    <div class="box-card">
+      <h2>Cachorros</h2>
+      <el-row :gutter="12">
+        <Cards title="Pesquisar" text="Faça uma pesquisa por nome"> </Cards>
+        <Cards
+          title="Novo Cadastro"
+          text="Não encontrou um pet? Você pode cadastrar um novo pet aqui"
+        ></Cards>
+        <el-col :span="12">
+          <el-button
+            class="button"
+            @click="goToSearchDog"
+            type="success"
+            icon="el-icon-search"
+            circle
+          ></el-button>
+        </el-col>
+        <el-col :span="12">
+          <el-button
+            class="button"
+            @click="goToFormDog"
+            type="primary"
+            icon="el-icon-plus"
+            circle
+          ></el-button>
+        </el-col>
+      </el-row>
+    </div>
+    <div>
+      <h2>Veterinários</h2>
+      <el-row :gutter="12">
+        <Cards title="Pesquisar" text="Faça uma pesquisa por nome"> </Cards>
+        <Cards
+          title="Novo Cadastro"
+          text="Não encontrou um Veterinário? Você pode cadastrar um novo veterinário aqui"
+        ></Cards>
+        <el-col :span="12">
+          <el-button
+            class="button"
+            @click="goToSearchVet"
+            type="success"
+            icon="el-icon-search"
+            circle
+          ></el-button>
+        </el-col>
+        <el-col :span="12">
+          <el-button
+            class="button"
+            @click="goToFormVet"
+            type="primary"
+            icon="el-icon-plus"
+            circle
+          ></el-button>
+        </el-col>
+      </el-row>
+    </div>
 
-    <p class="card-text">
-      Bem vindo(a) a plataforma online e reativa de cadastros e cuidados de Pets
-      na Web.<br />
-      Por favor, escolha uma opção abaixo:
-    </p>
-
-    <el-row :gutter="12">
-      <el-col :span="12">
-        <el-card class="card" shadow="hover">
-          <h4>Pesquisa</h4>
-          <p>
-            Encontre um pet pesquisando por nome.
-            <br />
-            <el-button
-              class="button"
-              @click="goToSearch"
-              icon="el-icon-search"
-            ></el-button>
-          </p>
-        </el-card>
-      </el-col>
-      <el-col :span="12">
-        <el-card class="card" shadow="hover">
-          <h4>Novo Cadastro</h4>
-          <p>
-            Não encontrou um pet? Você pode cadastrar um novo pet clicando aqui
-            <br />
-            <el-button
-              class="button"
-              @click="goToForm"
-              icon="el-icon-edit"
-            ></el-button>
-          </p>
-        </el-card>
-      </el-col>
-    </el-row>
-    <p>
+    <div class="rate">
       Deixe sua avaliação <br />
       <el-rate v-model="value2" :colors="colors"> </el-rate>
-    </p>
+    </div>
+
     <el-carousel :interval="8000" type="card" height="300px">
       <el-carousel-item v-for="item in 4" :key="item">
         <h4 class="medium">
@@ -50,55 +73,58 @@
         </h4>
       </el-carousel-item>
     </el-carousel>
-    <el-footer class="footer">
-      <p>
-        <br />
-        Copyright © 2020, Powered by Vue.JS
-      </p>
-    </el-footer>
+
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Cards from "../components/Cards";
 export default {
   name: "Home",
+  components: {
+    Header,
+    Footer,
+    Cards,
+  },
   data() {
     return {
       value2: "",
     };
   },
-
   methods: {
-    goToSearch() {
-      this.$router.push({ path: "/search" });
+    goToSearchDog() {
+      this.$router.push({ path: "/search-dog" });
     },
-    goToForm() {
-      this.$router.push({ path: "/form" });
+    goToFormDog() {
+      this.$router.push({ path: "/form-dog" });
+    },
+    goToSearchVet() {
+      this.$router.push({ path: "/search-vet" });
+    },
+    goToFormVet() {
+      this.$router.push({ path: "/form-vet" });
     },
   },
 };
 </script>
 
-<style>
-#logo {
-  border-radius: 80%;
-  height: 150px;
-  width: 150px;
-}
-
+<style scoped>
 .home {
   padding: 20px;
-  background-color: rgba(255, 255, 255);
+  background-color: rgb(255, 255, 255);
+}
+.box-card {
+  padding: 20px;
+  margin: 20px;
+}
+.rate {
+  padding: 30px;
+  margin: 30px;
 }
 
-.card-text {
-  background-color: gainsboro;
-  padding: 20px;
-}
-.buttom {
-  padding: 20px;
-  border-radius: 50%;
-}
 .el-carousel__item h3 {
   color: #8b95a1;
   opacity: 0.75;
@@ -112,11 +138,5 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
-}
-
-.footer {
-  background-color: gainsboro;
-  padding: 20px;
-  font: 10px;
 }
 </style>

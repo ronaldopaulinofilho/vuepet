@@ -1,9 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import About from "../views/About.vue";
-import Search from "../views/Search.vue";
-import Form from "../views/Form.vue";
+import SearchDog from "../views/SearchDog.vue";
+import FormDog from "../views/FormDog.vue";
+import SearchVet from "../views/SearchVet.vue";
+import FormVet from "../views/FormVet.vue";
 
 Vue.use(VueRouter);
 
@@ -13,21 +14,39 @@ const routes = [
     name: "Home",
     component: Home,
   },
+
   {
-    path: "/about",
-    name: "About",
-    component: About,
+    path: "/search-dog",
+    name: "SearchDog",
+    component: SearchDog,
   },
   {
-    path: "/search",
-    name: "Search",
-    component: Search,
+    path: "/form-dog",
+    name: "FormDog",
+    component: FormDog,
   },
   {
-    path: "/form",
-    name: "Form",
-    component: Form,
+    path: "/search-vet",
+    name: "SearchVet",
+    component: SearchVet,
   },
+  {
+    path: "/form-vet",
+    name:"FormVet",
+    component: FormVet,
+  },
+  {
+    path: "form-dog/:id?",
+    name: "FormDog",
+    component: FormDog,
+  },
+  {
+    path:"form-vet/:id?",
+    name:"FormVet",
+    component: FormVet,
+  }
+  
+ 
 ];
 
 const router = new VueRouter({

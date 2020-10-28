@@ -26,7 +26,7 @@
           <span>Nome:{{ vet.nome }}</span>
           <div class="bottom clearfix">
             <span>CPF:{{ vet.cpf }} </span>
-            <span>Idade:{{ vet.data }} </span>
+            <span>Idade:{{ idade }} </span>
             <span>Ver Pacientes:</span>
             <el-switch @click="showedDogs = true" v-model="showedDogs">
               Ver Pacientes
@@ -58,6 +58,7 @@
 <script>
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import moment from "moment";
 
 export default {
   name: "SearchVet",
@@ -79,6 +80,7 @@ export default {
       showedDogs: false,
       value1: true,
       value2: true,
+      idade: moment().diff(moment("this.vet.data"), "years"),
     };
   },
   mounted() {},

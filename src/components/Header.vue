@@ -3,10 +3,11 @@
   <img id="logo" src="../assets/vue-dog.jpg"/>
   <router-link to="/" >HOME</router-link>
   <img  src="../assets/Vuepet.jpg"  />
-    <p class="card-text">
-      {{title}}<br />
-      {{text}}
-    </p>
+    <div class="card-text">
+     <h2> {{title}} </h2> <br />
+      <h5>{{text}}</h5>
+      </div>
+    
     <img class="img" src="../assets/vet.jpg">
     </div>
 </template>
@@ -35,9 +36,10 @@ export default {
   width: 150px;
 }
 .card-text {
-  font-size: 18px;
+  font-size: 14px;
   background-color: gainsboro;
-  padding: 50px;
+  padding: 25px;
+  font-family: 'Tahoma', 'Geneva', 'Verdana', 'sans-serif';
 }
 
 </style>

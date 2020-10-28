@@ -20,21 +20,13 @@ const routes = [
     name: "SearchDog",
     component: SearchDog,
   },
-  {
-    path: "/form-dog",
-    name: "FormDog",
-    component: FormDog,
-  },
+ 
   {
     path: "/search-vet",
     name: "SearchVet",
     component: SearchVet,
   },
-  {
-    path: "/form-vet",
-    name:"FormVet",
-    component: FormVet,
-  },
+ 
   {
     path: "form-dog/:id?",
     name: "FormDog",

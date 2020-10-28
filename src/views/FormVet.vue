@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Header title="Vue Pet Clinic" text="Cadastre os dados do Veterinário aqui">
+    <Header
+     title="Cadastro de Veterinários" 
+    text="Cadastre os dados do Veterinário aqui">
     </Header>
 
     <div class="container-fluid">
@@ -47,6 +49,8 @@
 <script>
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+
+
 export default {
   name: "FormVet",
   components: {
@@ -60,11 +64,13 @@ export default {
         nome: "",
         cpf: "",
         data: "",
-        dogs: [],
+        
       },
+      dogs: [],
       validateNome: false,
       validateCpf: false,
       validateData: false,
+     
     };
   },
 
@@ -144,4 +150,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.button {
+  width: 100px;
+  height: 40px;
+  margin: 25px;
+}
+</style>

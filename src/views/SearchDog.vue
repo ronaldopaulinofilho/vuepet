@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header
-      title="Vue Pet Clinic"
+      title="Pesquisa de Pets"
       text="Encontre um Pet pesquisando por nome"
     ></Header>
 
@@ -13,13 +13,14 @@
         v-model="filter"
       ></el-input>
       <div class="button">
-        <el-button type="primary" @click="getDog(dogs)" icon="el-icon-search"
+        <el-button type="primary" @click="getDog(dog)" icon="el-icon-search"
           >Pesquisar</el-button
         >
       </div>
     </el-card>
+
     <div v-if="showedDog">
-      <el-card v-for="dog in dogs" :key="dog">
+      <el-card v-for="dog in dogs" :key="dog.id">
         <img src="../assets/card.png" class="image" />
         <div style="padding: 20px">
           <span>Nome:{{ dog.nome }}</span>
@@ -72,7 +73,9 @@ export default {
       showedDog: false,
     };
   },
-  mounted() {},
+  mounted() {
+    
+  },
 
   methods: {
     getDog() {
@@ -101,7 +104,10 @@ export default {
     },
 
     goToFormDog(id) {
-      this.$router.push({ name: "FormDog", params: { id: id } });
+      this.$router.push({
+         name: "FormDog",
+         params: { id: id }
+      });
     },
 
     removeDog() {
@@ -120,7 +126,7 @@ export default {
       }).then((response) => {
         if (response.ok === true) {
           this.$router.push({ path: "/" });
-          alert("Cachorro salvo com sucesso!");
+          alert("Cachorro excluído com sucesso!");
         }
       });
     },

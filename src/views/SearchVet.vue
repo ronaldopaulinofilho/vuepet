@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header
-      title="Vue Pet Clinic"
+      title="Pesquisa de Veterinários"
       text=" Encontre um veterinário pesquisando por nome"
     ></Header>
 
@@ -20,29 +20,29 @@
     </el-card>
 
     <div v-if="showedVet">
-      <el-card v-for="vet in vets" :key="vet">
+      <el-card v-for="vet in vets" :key="vet.id">
         <img src="../assets/images.jpeg" class="image" />
-        <div style="padding: '10px">
+        <div style="padding: '20px">
           <span>Nome:{{ vet.nome }}</span>
           <div class="bottom clearfix">
             <span>CPF:{{ vet.cpf }} </span>
             <span>Idade:{{ vet.data }} </span>
             <span>Ver Pacientes:</span>
-            <el-switch @click="showedDogs=true" v-model="showedDogs">
+            <el-switch @click="showedDogs = true" v-model="showedDogs">
               Ver Pacientes
             </el-switch>
-          <el-input v-show="showedDogs">{{ vet.dogs }}</el-input>
+            <el-input v-show="showedDogs">{{ dogs }}</el-input>
           </div>
           <el-button
             class="button"
-            @click="goToFormVet(id)"
+            @click="goToFormVet(vet.id)"
             type="primary"
             icon="el-icon-edit"
             circle
           ></el-button>
           <el-button
             class="button"
-            @click="removeVet(id)"
+            @click="removeVet"
             type="danger"
             icon="el-icon-delete"
             circle
@@ -58,6 +58,7 @@
 <script>
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+
 export default {
   name: "SearchVet",
   components: {
@@ -77,7 +78,7 @@ export default {
       showedVet: false,
       showedDogs: false,
       value1: true,
-        value2: true,
+      value2: true,
     };
   },
   mounted() {},
@@ -90,7 +91,7 @@ export default {
         params = "?nome=" + this.filter;
       }
       this.showedVet = true;
-      fetch("http://localhost:8080/vets/" + params, {
+      fetch("http://localhost:8080/vets" + params, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -107,16 +108,30 @@ export default {
         });
     },
 
-    goToFormVet(nome) {
+    goToFormVet(id) {
       this.$router.push({
         name: "FormVet",
-        path: "form-vet/:id?",
-        params: { nome: nome },
+        params: { id: id },
       });
     },
     removeVet() {
       let index = this.vets.indexOf();
       this.vets.splice(index, 1);
+    },
+    deleteVet() {
+      fetch("http://localhost:8080/vets", {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.vet),
+      }).then((response) => {
+        if (response.ok === true) {
+          this.$router.push({ path: "/" });
+          alert("Veterinário excluído com sucesso!");
+        }
+      });
     },
   },
 };

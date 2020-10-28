@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header
-      title="Vue Pet Clinic"
+      title="Cadastro de Pets"
       text="Cadastre os dados do Pet aqui:"
     ></Header>
 
@@ -48,7 +48,7 @@
         <div class="col-4">
           <label> Veterinário Responsável</label>
           <select class="form-control" v-model="dog.vetResponsavel">
-            <option v-for="vet in vets" :key="vet">{{ vet.nome }}</option>
+            <option v-for="vet in vets" :key="vet.id">{{ vet.nome }}</option>
           </select>
         </div>
 
@@ -91,8 +91,9 @@ export default {
     };
   },
   mounted() {
+    
     if (this.$route.params.id != undefined) {
-      fetch("http://localhost:8080/dogs/" + this.$route.params.id, {
+      fetch("http://localhost:8080/dogs" + this.$route.params.id, {
         method: "GET",
         headers: {
           Accept: "application/json",

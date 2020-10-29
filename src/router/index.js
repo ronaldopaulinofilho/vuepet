@@ -28,12 +28,12 @@ const routes = [
   },
  
   {
-    path: "form-dog/:id?",
+    path: "/form-dog/:id?",
     name: "FormDog",
     component: FormDog,
   },
   {
-    path:"form-vet/:id?",
+    path:"/form-vet/:id?",
     name:"FormVet",
     component: FormVet,
   }

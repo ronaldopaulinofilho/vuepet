@@ -80,7 +80,7 @@ export default {
       showedDogs: false,
       value1: true,
       value2: true,
-      idade: moment().diff(moment("this.vet.data"), "years"),
+      idade: moment().diff(moment(), "years"),
     };
   },
   mounted() {},

@@ -14,8 +14,7 @@
             placeholder="Digite o nome do Pet"
             v-model="dog.nome"
             maxlength="30"
-            show-word-limit
-          >
+            show-word-limit>
           </el-input>
           <span v-show="validateNome"> Você precisa digitar um nome </span>
           <div class="col-4">
@@ -56,7 +55,7 @@
           >Salvar</el-button
         >
       </div>
-      <div></div>
+      
     </div>
 
     <Footer></Footer>
@@ -91,6 +90,7 @@ export default {
     };
   },
   mounted() {
+    
     
     if (this.$route.params.id != undefined) {
       fetch("http://localhost:8080/dogs" + this.$route.params.id, {

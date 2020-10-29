@@ -14,7 +14,8 @@
             placeholder="Digite o nome do Pet"
             v-model="dog.nome"
             maxlength="30"
-            show-word-limit>
+            show-word-limit
+          >
           </el-input>
           <span v-show="validateNome"> Você precisa digitar um nome </span>
           <div class="col-4">
@@ -55,7 +56,14 @@
           >Salvar</el-button
         >
       </div>
-      
+      <div v-show="showedDog">
+        <el-button
+          @click="deleteDog(dog.id)"
+          type="danger"
+          icon="el-icon-delete"
+          circle
+        ></el-button>
+      </div>
     </div>
 
     <Footer></Footer>
@@ -87,12 +95,12 @@ export default {
       validateRaca: false,
       validatePeso: false,
       validateIdade: false,
+      showedDog: false,
     };
   },
   mounted() {
-    
-    
     if (this.$route.params.id != undefined) {
+      this.showedDog = true;
       fetch("http://localhost:8080/dogs" + this.$route.params.id, {
         method: "GET",
         headers: {
@@ -172,6 +180,21 @@ export default {
           }
         });
       }
+    },
+    deleteDog() {
+      fetch("http://localhost:8080/dogs/" + this.$route.params.id, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        if (response.ok === true) {
+          
+          this.$router.push({ path: "/" });
+          alert("Cachorro excluído com sucesso!");
+        }
+      });
     },
   },
 };

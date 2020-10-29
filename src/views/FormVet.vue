@@ -41,6 +41,14 @@
       <div class="button">
         <el-button type="success" @click="saveVet">Salvar</el-button>
       </div>
+      <div v-show="showedVet">
+        <el-button
+          @click="deleteVet(vet.id)"
+          type="danger"
+          icon="el-icon-delete"
+          circle
+        ></el-button>
+      </div>
     </div>
     <Footer></Footer>
   </div>
@@ -70,12 +78,14 @@ export default {
       validateNome: false,
       validateCpf: false,
       validateData: false,
+      showedVet: false,
      
     };
   },
 
   mounted() {
     if (this.$route.params.id != undefined) {
+      this.showedVet = true;
       fetch("http://localhost:8080/vets/" + this.$route.params.id, {
         method: "GET",
         headers: {
@@ -145,6 +155,21 @@ export default {
           }
         });
       }
+    },
+     deleteVet() {
+      fetch("http://localhost:8080/vets/" + this.$route.params.id, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        if (response.ok === true) {
+          
+          this.$router.push({ path: "/" });
+          alert("Veterinário excluído com sucesso!");
+        }
+      });
     },
   },
 };

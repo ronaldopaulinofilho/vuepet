@@ -5,7 +5,10 @@
       text="Cadastre os dados do Pet aqui:"
     ></Header>
 
-    <div class="container-fluid">
+    <div class="form">
+      <div class="showed-dog" v-show="showedDog">
+        Edite os dados do Pet selecionado:
+      </div>
       <div class="row">
         <div class="col-6">
           <label> Nome:</label>
@@ -17,46 +20,76 @@
             show-word-limit
           >
           </el-input>
-          <span v-show="validateNome"> Você precisa digitar um nome </span>
-          <div class="col-4">
-            <label> Raça:</label>
-            <select class="form-control" v-model="dog.raca">
-              <option selected>Beagle</option>
-              <option>Poodle</option>
-              <option>Husk</option>
-              <option>Vira Lata</option>
-            </select>
-            <span v-show="validateRaca"> Você precisa selecionar uma raça</span>
-          </div>
+          <el-alert
+            v-show="validateNome"
+            title="Você precisa digitar um nome"
+            type="error"
+            center
+            show-icon
+          >
+          </el-alert>
+        </div>
+        <div class="col-4">
+          <label> Raça:</label>
+          <select class="form-control" v-model="dog.raca">
+            <option selected>Beagle</option>
+            <option>Poodle</option>
+            <option>Husk</option>
+            <option>Vira Lata</option>
+          </select>
+          <el-alert
+            v-show="validateRaca"
+            title="Você precisa selecionar uma raça"
+            type="error"
+            center
+            show-icon
+          >
+          </el-alert>
         </div>
       </div>
       <div class="row">
-        <div class="col-2">
+        <div class="col-3">
           <label> Peso:</label>
           <el-input type="number" v-model="dog.peso" min="1" max="100">
           </el-input>
-          <span v-show="validatePeso"> Você precisa definir um peso </span>
+          <el-alert
+            v-show="validatePeso"
+            title="Você precisa definir um peso"
+            type="error"
+            center
+            show-icon
+          >
+          </el-alert>
         </div>
-        <div class="col-2">
+        <div class="col-3">
           <label> Idade:</label>
           <el-input type="number" v-model="dog.idade" min="0" max="30">
           </el-input>
-          <span v-show="validateIdade">
-            Você precisa selecionar uma idade
-          </span>
+          <el-alert
+            v-show="validateIdade"
+            title="Você precisa selecionar uma idade"
+            type="error"
+            center
+            show-icon
+          >
+          </el-alert>
         </div>
         <div class="col-4">
           <label> Veterinário Responsável</label>
           <select class="form-control" v-model="dog.vetResponsavel">
-            <option v-for="vet in vets" :key="vet.id">{{ vet.nome }}</option>
+            <option v-for="vet in vets" :key="vet.id" :value="vet.id">
+              {{ vet.nome }}
+            </option>
           </select>
         </div>
-
-        <el-button class="button" type="success" @click="saveDog"
+      </div>
+      <div class="row">
+        <el-button class="button" plain type="success" @click="saveDog"
           >Salvar</el-button
         >
       </div>
-      <div v-show="showedDog">
+      <div class="showed-dog" v-show="showedDog">
+        Deseja excluir o Pet?
         <el-button
           @click="deleteDog(dog.id)"
           type="danger"
@@ -175,8 +208,12 @@ export default {
           body: JSON.stringify(dog),
         }).then((response) => {
           if (response.ok === true) {
+            this.$notify({
+              title: "Sucesso",
+              message: "Cachorro Salvo com Sucesso",
+              type: "success",
+            });
             this.$router.push({ path: "/" });
-            alert("Cachorro salvo com sucesso!");
           }
         });
       }
@@ -190,9 +227,12 @@ export default {
         },
       }).then((response) => {
         if (response.ok === true) {
-          
           this.$router.push({ path: "/" });
-          alert("Cachorro excluído com sucesso!");
+          this.$notify({
+            title: "Sucesso",
+            message: "Cachorro Excluído com Sucesso",
+            type: "success",
+          });
         }
       });
     },
@@ -201,9 +241,21 @@ export default {
 </script>
 
 <style scoped>
+.form {
+  padding: 20px;
+  margin: 20px;
+  margin-left: 140px;
+}
 .button {
   width: 100px;
   height: 40px;
-  margin: 25px;
+  margin-top: 20px;
+  margin-left: 500px;
+}
+.showed-dog {
+  padding: 10px;
+  margin: 10px;
+  margin-right: 100px;
+  font-size: 14px;
 }
 </style>

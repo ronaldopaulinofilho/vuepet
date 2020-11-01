@@ -28,10 +28,12 @@
             <span>CPF:{{ vet.cpf }} </span>
             <span>Idade:{{ idade }} </span>
             <span>Ver Pacientes:</span>
-            <el-switch @click="showedDogs = true" v-model="showedDogs">
+            <el-switch @click="getDogsInVet(vet.id)" v-model="showedDogs">
               Ver Pacientes
             </el-switch>
-            <el-input v-show="showedDogs">{{ dogs }}</el-input>
+            <el-input v-for= "dog in dogsInVet(vet.id)" :key="dog.id">{{
+             this.dog.nome
+            }}</el-input>
           </div>
           <el-button
             class="button"
@@ -74,8 +76,9 @@ export default {
         nome: "",
         cpf: "",
         data: "",
-        dogs: [],
+        dogs:[],
       },
+      dogsInVets: [],
       showedVet: false,
       showedDogs: false,
       value1: true,
@@ -107,6 +110,26 @@ export default {
         })
         .then((v) => {
           this.vets = v;
+        });
+    },
+    dogsInVet(idVet) {
+      let dogsInVet = this.dogsInVets.find((f) => f.idVets === idVet);
+
+      if (dogsInVet != undefined) return dogsInVet.dogs;
+      else return [];
+    },
+
+    getDogsInVet(idVet) {
+      this.showedDogs=true;
+      fetch("http://localhost:8080/vets" + this.$route.params.id + "/dogs", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((d) => {
+          this.dogsInVets.push({ idVets:idVet, dogs:d });
         });
     },
 

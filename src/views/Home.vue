@@ -1,66 +1,107 @@
 <template>
   <div class="home">
     <Header
-      title="Bem vindo (a) ao Vue Pet Clinic"
-      text="A maneira mais fácil e reativa de cadastrar seus pets na web"
+      title="Bem vindXs ao Vue Pet Clinic"
+      text="A maneira mais fácil e reativa de cadastrar seus Pets na Web"
     ></Header>
-    <div class="box-card">
-      <h2>Cachorros</h2>
-      <el-row :gutter="12">
-        <Cards title="Pesquisar" text="Faça uma pesquisa por nome"> </Cards>
-        <Cards
-          title="Novo Cadastro"
-          text="Não encontrou um pet? Você pode cadastrar um novo pet aqui"
-        ></Cards>
-        <el-col :span="12">
-          <el-button
-            class="button"
-            @click="goToSearchDog"
-            type="success"
-            icon="el-icon-search"
-            circle
-          ></el-button>
-        </el-col>
-        <el-col :span="12">
-          <el-button
-            class="button"
-            @click="goToFormDog"
-            type="primary"
-            icon="el-icon-plus"
-            circle
-          ></el-button>
-        </el-col>
-      </el-row>
-    </div>
-    <div>
-      <h2>Veterinários</h2>
-      <el-row :gutter="12">
-        <Cards title="Pesquisar" text="Faça uma pesquisa por nome"> </Cards>
-        <Cards
-          title="Novo Cadastro"
-          text="Não encontrou um Veterinário? Você pode cadastrar um novo veterinário aqui"
-        ></Cards>
-        <el-col :span="12">
-          <el-button
-            class="button"
-            @click="goToSearchVet"
-            type="success"
-            icon="el-icon-search"
-            circle
-          ></el-button>
-        </el-col>
-        <el-col :span="12">
-          <el-button
-            class="button"
-            @click="goToFormVet"
-            type="primary"
-            icon="el-icon-plus"
-            circle
-          ></el-button>
-        </el-col>
-      </el-row>
-    </div>
+    <div class="login-box" v-show="box">
+      <div class="row">
+        <div class="col-7">
+          <el-divider>
+            <h8>MINHA CONTA</h8>
+          </el-divider>
+          <h6>Já é cadastrado em nossa clínica?</h6>
+          <h6>
+            Por favor, para acessar nosso sistema, digite seu nome de usuário e
+            senha fornecidos no momento do cadastro.
+          </h6>
+        </div>
 
+        <div class="col-5">
+          <div class="row">
+            <div class="col-8">
+              <h8>Usuário:</h8>
+              <input v-model="user" type="text" class="form-control" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <h8>Senha:</h8>
+              <input v-model="password" type="password" class="form-control" />
+            </div>
+          </div>
+          <div class="row mt-2 text center">
+            <div class="col-8">
+              <el-button
+                plain
+                @click="doLogin()"
+                icon="el-icon-check"
+                type="primary"
+                >Entrar</el-button
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-show="dashboard">
+      <div class="box-card">
+        <h2>Cachorros</h2>
+        <el-row :gutter="12">
+          <Cards title="Pesquisar" text="Faça uma pesquisa por nome"> </Cards>
+          <Cards
+            title="Novo Cadastro"
+            text="Não encontrou um pet? Você pode cadastrar um novo pet aqui"
+          ></Cards>
+          <el-col :span="12">
+            <el-button
+              class="button"
+              @click="goToSearchDog"
+              type="success"
+              icon="el-icon-search"
+              circle
+            ></el-button>
+          </el-col>
+          <el-col :span="12">
+            <el-button
+              class="button"
+              @click="goToFormDog"
+              type="primary"
+              icon="el-icon-plus"
+              circle
+            ></el-button>
+          </el-col>
+        </el-row>
+      </div>
+      <div>
+        <h2>Veterinários</h2>
+        <el-row :gutter="12">
+          <Cards title="Pesquisar" text="Faça uma pesquisa por nome"> </Cards>
+          <Cards
+            title="Novo Cadastro"
+            text="Não encontrou um Veterinário? Você pode cadastrar um novo veterinário aqui"
+          ></Cards>
+          <el-col :span="12">
+            <el-button
+              class="button"
+              @click="goToSearchVet"
+              type="success"
+              icon="el-icon-search"
+              circle
+            ></el-button>
+          </el-col>
+          <el-col :span="12">
+            <el-button
+              class="button"
+              @click="goToFormVet"
+              type="primary"
+              icon="el-icon-plus"
+              circle
+            ></el-button>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
     <div class="rate">
       Deixe sua avaliação <br />
       <el-rate v-model="value2" :colors="colors"> </el-rate>
@@ -74,7 +115,7 @@
       </el-carousel-item>
     </el-carousel>
 
-    <Footer></Footer>
+    <Footer> </Footer>
   </div>
 </template>
 
@@ -92,9 +133,30 @@ export default {
   data() {
     return {
       value2: "",
+      dashboard: false,
+      user: "",
+      password: "",
+      userValid: [{ user: "user", password: "vuejs" }],
+      box: true,
     };
   },
   methods: {
+    doLogin() {
+      let list = this.userValid.filter((user) => {
+        if (user.user === this.user && user.password === this.password)
+          return true;
+        else return false;
+      });
+      if (list.length > 0) {
+        this.dashboard = true;
+        this.box = false;
+        this.$notify({
+          title: "Sucesso",
+          message: "Você está logado",
+          type: "success",
+        });
+      }
+    },
     goToSearchDog() {
       this.$router.push({ path: "/search-dog" });
     },
@@ -119,6 +181,12 @@ export default {
 .box-card {
   padding: 20px;
   margin: 20px;
+}
+.login-box {
+  padding: 20px;
+  margin: 20px;
+  background-color: #b0c4de;
+  shadow: hover 1px 1px;
 }
 .rate {
   padding: 30px;

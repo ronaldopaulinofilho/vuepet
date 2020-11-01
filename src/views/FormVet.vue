@@ -1,11 +1,15 @@
 <template>
   <div>
     <Header
-     title="Cadastro de Veterinários" 
-    text="Cadastre os dados do Veterinário aqui">
+      title="Cadastro de Veterinários"
+      text="Cadastre os dados do Veterinário aqui"
+    >
     </Header>
 
-    <div class="container-fluid">
+    <div class="form">
+      <div class="showed-vet" v-show="showedVet">
+        Edite os dados do Veterinário selecionado:
+      </div>
       <div class="row">
         <div class="col-6">
           <label> Nome:</label>
@@ -17,17 +21,32 @@
             show-word-limit
           >
           </el-input>
-          <span v-show="validateNome"> Você precisa digitar um nome </span>
+          <el-alert
+            v-show="validateNome"
+            title="Você precisa digitar um nome"
+            type="error"
+            center
+            show-icon
+          >
+          </el-alert>
         </div>
-        <div class="col-6">
+        <div class="col-4">
           <label> CPF:</label>
           <el-input v-model="vet.cpf" v-mask="['###. ###. ### - ##']">
           </el-input>
-          <span v-show="validateCpf"> Digite um CPF válido </span>
+          <el-alert
+            v-show="validateCpf"
+            title="Digite um CPF válido"
+            type="error"
+            center
+            show-icon
+          >
+          </el-alert>
         </div>
       </div>
+      <br />
       <div class="row">
-        <div class="col-6">
+        <div class="col-10">
           <label>Data de Nascimento:</label>
           <el-date-picker
             v-model="vet.data"
@@ -35,15 +54,26 @@
             placeholder="Selecione um Data"
           >
           </el-date-picker>
-          <span v-show="validateData"> Escolha uma data de nascimento</span>
+          <el-alert
+            v-show="validateData"
+            title="Escolha uma data de nascimento"
+            type="error"
+            center
+            show-icon
+          >
+          </el-alert>
         </div>
       </div>
+
       <div class="button">
-        <el-button type="success" @click="saveVet">Salvar</el-button>
+        <el-button type="success" plain @click="saveVet">Salvar</el-button>
       </div>
-      <div v-show="showedVet">
+
+      <div class="showed-vet" v-show="showedVet">
+        Deseja excluir o veterinário?
         <el-button
           @click="deleteVet(vet.id)"
+          plain
           type="danger"
           icon="el-icon-delete"
           circle
@@ -58,7 +88,6 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-
 export default {
   name: "FormVet",
   components: {
@@ -72,14 +101,12 @@ export default {
         nome: "",
         cpf: "",
         data: "",
-        
       },
       dogs: [],
       validateNome: false,
       validateCpf: false,
       validateData: false,
       showedVet: false,
-     
     };
   },
 
@@ -150,13 +177,17 @@ export default {
           body: JSON.stringify(vet),
         }).then((response) => {
           if (response.ok === true) {
-            alert("Veterinário salvo com sucesso!");
+            this.$notify({
+              title: "Sucesso",
+              message: "Veterinário Salvo com Sucesso",
+              type: "success",
+            });
             this.$router.push({ path: "/" });
           }
         });
       }
     },
-     deleteVet() {
+    deleteVet() {
       fetch("http://localhost:8080/vets/" + this.$route.params.id, {
         method: "DELETE",
         headers: {
@@ -165,9 +196,12 @@ export default {
         },
       }).then((response) => {
         if (response.ok === true) {
-          
           this.$router.push({ path: "/" });
-          alert("Veterinário excluído com sucesso!");
+          this.$notify({
+            title: "Sucesso",
+            message: "Veterinário Excluído com Sucesso",
+            type: "success",
+          });
         }
       });
     },
@@ -176,9 +210,21 @@ export default {
 </script>
 
 <style scoped>
+.form {
+  padding: 20px;
+  margin: 20px;
+  margin-left: 150px;
+}
 .button {
   width: 100px;
   height: 40px;
-  margin: 25px;
+  margin: 20px;
+  margin-left: 450px;
+}
+.showed-vet {
+  padding: 10px;
+  margin: 10px;
+  margin-right: 150px;
+  font-size: 14px;
 }
 </style>

@@ -102,6 +102,7 @@ export default {
         cpf: "",
         data: "",
       },
+      vets: [],
       dogs: [],
       validateNome: false,
       validateCpf: false,
@@ -187,6 +188,7 @@ export default {
         });
       }
     },
+
     deleteVet() {
       fetch("http://localhost:8080/vets/" + this.$route.params.id, {
         method: "DELETE",

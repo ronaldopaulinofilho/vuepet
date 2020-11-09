@@ -28,7 +28,6 @@
             <span>Raça:{{ dog.raca }} </span>
             <span>Peso:{{ dog.peso }} </span>
             <span>Idade:{{ dog.idade }} </span>
-            <span> Veterinário Responsável: {{ dog.vetResponsavel }}</span>
           </div>
           <el-button
             @click="goToFormDog(dog.id)"
@@ -73,9 +72,7 @@ export default {
       showedDog: false,
     };
   },
-  mounted() {
-    
-  },
+  mounted() {},
 
   methods: {
     getDog() {
@@ -105,8 +102,8 @@ export default {
 
     goToFormDog(id) {
       this.$router.push({
-         name: "FormDog",
-         params: { id: id }
+        name: "FormDog",
+        params: { id: id },
       });
     },
 
@@ -122,7 +119,6 @@ export default {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        
       }).then((response) => {
         if (response.ok === true) {
           this.$router.push({ path: "/" });

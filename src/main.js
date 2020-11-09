@@ -5,11 +5,16 @@ import VueTheMask from "vue-the-mask";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import locale from "element-ui/lib/locale/lang/pt-br";
-
+import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.use(ElementUI, { locale });
 Vue.use(VueTheMask);
-
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyCGH9uJ33VU-SIHnVBPhpaS69SJWiQM5hk",
+    libraries: "places" // necessary for places input
+  }
+});
 
 Vue.config.productionTip = false;
 

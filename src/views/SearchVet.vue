@@ -26,14 +26,24 @@
           <span>Nome:{{ vet.nome }}</span>
           <div class="bottom clearfix">
             <span>CPF:{{ vet.cpf }} </span>
-            <span>Idade:{{ idade }} </span>
+            <span>Idade:{{ calculate(vet.data) }} </span>
             <span>Ver Pacientes:</span>
-            <el-switch @click="getDogsInVet(vet.id)" v-model="showedDogs">
-              Ver Pacientes
-            </el-switch>
-            <el-input v-for= "dog in dogsInVet(vet.id)" :key="dog.id">{{
-             this.dog.nome
-            }}</el-input>
+            <el-button
+              @click="getDogsInVet(vet.id)"
+              icon="el-icon-arrow-down"
+              circle=""
+            >
+            </el-button>
+            <ul>
+              <el-tag
+                @click="goToFormDog(dog.id)"
+                type="primary"
+                v-for="dog in dogsInVet(vet.id)"
+                :key="dog.id"
+              >
+                {{ dog.nome }}
+              </el-tag>
+            </ul>
           </div>
           <el-button
             class="button"
@@ -72,18 +82,19 @@ export default {
   data() {
     return {
       filter: "",
-      vets: {
-        nome: "",
-        cpf: "",
-        data: "",
-        dogs:[],
-      },
-      dogsInVets: [],
+      vets: [
+        {
+          nome: "",
+          cpf: "",
+          data: "",
+          dogs: [],
+        },
+      ],
+      dogsOfVets: [],
       showedVet: false,
       showedDogs: false,
       value1: true,
       value2: true,
-      idade: moment().diff(moment(), "years"),
     };
   },
   mounted() {},
@@ -112,24 +123,32 @@ export default {
           this.vets = v;
         });
     },
-    dogsInVet(idVet) {
-      let dogsInVet = this.dogsInVets.find((f) => f.idVets === idVet);
+    dogsInVet(id) {
+      let dogs_Vet = this.dogsOfVets.filter((f) => {
+        return f.id === id;
+      });
 
-      if (dogsInVet != undefined) return dogsInVet.dogs;
+      if (dogs_Vet.length > 0) return dogs_Vet[0].dogs;
       else return [];
     },
 
-    getDogsInVet(idVet) {
-      this.showedDogs=true;
-      fetch("http://localhost:8080/vets" + this.$route.params.id + "/dogs", {
+    getDogsInVet(id) {
+      this.showedDogs = true;
+      fetch(`http://localhost:8080/vets/${id}/dogs`, {
         method: "GET",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
         },
       })
-        .then((d) => {
-          this.dogsInVets.push({ idVets:idVet, dogs:d });
+        .then((response) => {
+          if (response.ok === true) return response.json();
+        })
+        .then((dogsOfVets) => {
+          let dogs_Vet = {
+            id: id,
+            dogs: dogsOfVets,
+          };
+          this.dogsOfVets.push(dogs_Vet);
         });
     },
 
@@ -142,6 +161,9 @@ export default {
     removeVet() {
       let index = this.vets.indexOf();
       this.vets.splice(index, 1);
+    },
+    calculate(data) {
+      return moment().diff(moment(data), "years");
     },
     deleteVet() {
       fetch("http://localhost:8080/vets", {
@@ -156,6 +178,12 @@ export default {
           this.$router.push({ path: "/" });
           alert("Veterinário excluído com sucesso!");
         }
+      });
+    },
+    goToFormDog(id) {
+      this.$router.push({
+        name: "FormDog",
+        params: { id: id },
       });
     },
   },

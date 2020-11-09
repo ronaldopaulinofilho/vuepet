@@ -4,11 +4,12 @@
       title="Bem vindXs ao Vue Pet Clinic"
       text="A maneira mais fácil e reativa de cadastrar seus Pets na Web"
     ></Header>
+
     <div class="login-box" v-show="box">
       <div class="row">
         <div class="col-7">
           <el-divider>
-            <h8>MINHA CONTA</h8>
+            <h6>MINHA CONTA</h6>
           </el-divider>
           <h6>Já é cadastrado em nossa clínica?</h6>
           <h6>
@@ -20,13 +21,13 @@
         <div class="col-5">
           <div class="row">
             <div class="col-8">
-              <h8>Usuário:</h8>
+              <h6>Usuário:</h6>
               <input v-model="user" type="text" class="form-control" />
             </div>
           </div>
           <div class="row">
             <div class="col-8">
-              <h8>Senha:</h8>
+              <h6>Senha:</h6>
               <input v-model="password" type="password" class="form-control" />
             </div>
           </div>
@@ -114,7 +115,7 @@
         </h4>
       </el-carousel-item>
     </el-carousel>
-
+    <google-map />
     <Footer> </Footer>
   </div>
 </template>
@@ -123,12 +124,15 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Cards from "../components/Cards";
+import GoogleMap from "../components/GoogleMap";
+
 export default {
   name: "Home",
   components: {
     Header,
     Footer,
     Cards,
+    GoogleMap,
   },
   data() {
     return {
@@ -186,7 +190,7 @@ export default {
   padding: 20px;
   margin: 20px;
   background-color: #b0c4de;
-  shadow: hover 1px 1px;
+  shadow: hover;
 }
 .rate {
   padding: 30px;

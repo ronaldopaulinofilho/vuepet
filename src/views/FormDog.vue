@@ -36,6 +36,7 @@
             <option>Poodle</option>
             <option>Husk</option>
             <option>Vira Lata</option>
+            <option>Bulldog</option>
           </select>
           <el-alert
             v-show="validateRaca"
@@ -77,14 +78,18 @@
         <div class="col-4">
           <label> Veterinário Responsável</label>
           <select class="form-control" v-model="dog.vetResponsavel">
-            <option v-for="vet in vets" :key="vet.id" :value="vet.id">
-              {{ vet.nome }}
+            <option
+              v-for="vetResponsavel in vets"
+              :key="vetResponsavel.id"
+              :value="vetResponsavel.id"
+            >
+              {{ vetResponsavel.nome }}
             </option>
           </select>
         </div>
       </div>
       <div class="row">
-        <el-button class="button" plain type="success" @click="saveDog"
+        <el-button class="button" plain type="success" @click="saveDog(dog.id)"
           >Salvar</el-button
         >
       </div>
@@ -114,13 +119,11 @@ export default {
   },
   data() {
     return {
-      newDog: "",
       dog: {
         nome: "",
         raca: "",
         peso: "",
         idade: "",
-        vetResponsavel: "",
       },
       vets: [],
 
@@ -134,10 +137,12 @@ export default {
   mounted() {
     if (this.$route.params.id != undefined) {
       this.showedDog = true;
-      fetch("http://localhost:8080/dogs" + this.$route.params.id, {
+
+      fetch("http://localhost:8080/dogs/" + this.$route.params.id, {
         method: "GET",
         headers: {
           Accept: "application/json",
+          "Content-Type": "application/json",
         },
       })
         .then((response) => {
@@ -151,6 +156,7 @@ export default {
       method: "GET",
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
       .then((response) => {
@@ -188,12 +194,11 @@ export default {
           raca: this.dog.raca,
           peso: this.dog.peso,
           idade: this.dog.idade,
-          vetResponsavel: this.dog.vetResponsavel,
         };
         let paramsId = "";
         let methodHTTP = "";
         if (this.$route.params.id != undefined) {
-          methodHTTP = "PUT";
+          methodHTTP = "PATCH";
           paramsId = this.$route.params.id;
         } else {
           methodHTTP = "POST";
@@ -208,16 +213,30 @@ export default {
           body: JSON.stringify(dog),
         }).then((response) => {
           if (response.ok === true) {
-            this.$notify({
-              title: "Sucesso",
-              message: "Cachorro Salvo com Sucesso",
-              type: "success",
+            fetch("http://localhost:8080/dogs/" + paramsId, {
+              method: "PATCH",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                vet_id: dog.vet_id,
+              }),
+            }).then((response) => {
+              if (response.ok === true) {
+                this.$router.push({ path: "/" });
+                this.$notify({
+                  title: "Sucesso",
+                  message: "Cachorro Salvo com Sucesso",
+                  type: "success",
+                });
+              }
             });
-            this.$router.push({ path: "/" });
           }
         });
       }
     },
+
     deleteDog() {
       fetch("http://localhost:8080/dogs/" + this.$route.params.id, {
         method: "DELETE",

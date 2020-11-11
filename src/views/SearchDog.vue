@@ -3,6 +3,7 @@
     <Header
       title="Pesquisa de Pets"
       text="Encontre um Pet pesquisando por nome"
+      route="/"
     ></Header>
 
     <el-card class="box-card">

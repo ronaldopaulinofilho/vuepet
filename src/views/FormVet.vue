@@ -3,6 +3,7 @@
     <Header
       title="Cadastro de Veterinários"
       text="Cadastre os dados do Veterinário aqui"
+      route="/"
     >
     </Header>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h4>Conheça Nossa Localização</h4>
+      <h4>CONHEÇA NOSSA LOCALIZAÇÃO</h4>
     </div>
     <br />
 

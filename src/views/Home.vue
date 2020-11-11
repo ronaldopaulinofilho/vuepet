@@ -1,122 +1,146 @@
 <template>
   <div class="home">
-    <Header
-      title="Bem vindXs ao Vue Pet Clinic"
-      text="A maneira mais fácil e reativa de cadastrar seus Pets na Web"
-    ></Header>
+    <div class="container-fluid">
+      <Header
+        title="Bem vindXs ao Vue Pet Clinic"
+        text="A maneira mais fácil e reativa de cadastrar seus Pets na Web"
+        route="/"
+      ></Header>
 
-    <div class="login-box" v-show="box">
-      <div class="row">
-        <div class="col-7">
-          <el-divider>
-            <h6>MINHA CONTA</h6>
-          </el-divider>
-          <h6>Já é cadastrado em nossa clínica?</h6>
-          <h6>
-            Por favor, para acessar nosso sistema, digite seu nome de usuário e
-            senha fornecidos no momento do cadastro.
-          </h6>
+      <div class="login-box" v-show="box">
+        <div class="row">
+          <div class="col-7">
+            <el-divider>
+              <h6>MINHA CONTA</h6>
+            </el-divider>
+            <h6>Já é cadastrado em nossa clínica?</h6>
+            <h6>
+              Por favor, para acessar nosso sistema, digite seu nome de usuário
+              e senha fornecidos no momento do cadastro.
+            </h6>
+          </div>
+
+          <div class="col-5">
+            <div class="row">
+              <div class="col-8">
+                <h6>Usuário:</h6>
+                <input v-model="user" type="text" class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                <h6>Senha:</h6>
+                <input
+                  v-model="password"
+                  type="password"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="row mt-2 text center">
+              <div class="col-8">
+                <el-button
+                  plain
+                  @click="doLogin()"
+                  icon="el-icon-check"
+                  type="primary"
+                  >Entrar</el-button
+                >
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="col-5">
-          <div class="row">
-            <div class="col-8">
-              <h6>Usuário:</h6>
-              <input v-model="user" type="text" class="form-control" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-8">
-              <h6>Senha:</h6>
-              <input v-model="password" type="password" class="form-control" />
-            </div>
-          </div>
-          <div class="row mt-2 text center">
-            <div class="col-8">
+      </div>
+      <div v-show="dashboard">
+        <div class="box-card">
+          <h4>CACHORROS</h4>
+          <el-row :gutter="12">
+            <cards
+              title="Pesquisar"
+              text="Faça uma pesquisa por nome"
+              route="/search-dog"
+            >
+            </cards>
+            <cards
+              title="Novo Cadastro"
+              text="Não encontrou um pet? Você pode cadastrar um novo pet aqui"
+              route="/form-dog"
+            ></cards>
+            <el-col :span="12">
               <el-button
-                plain
-                @click="doLogin()"
-                icon="el-icon-check"
+                class="button"
+                @click="goToSearchDog"
+                type="success"
+                icon="el-icon-search"
+                circle
+              ></el-button>
+            </el-col>
+            <el-col :span="12">
+              <el-button
+                class="button"
+                @click="goToFormDog"
                 type="primary"
-                >Entrar</el-button
-              >
-            </div>
+                icon="el-icon-plus"
+                circle
+              ></el-button>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="box-card">
+          <h4>VETERINÁRIOS</h4>
+          <el-row :gutter="12">
+            <cards
+              title="Pesquisar"
+              text="Faça uma pesquisa por nome"
+              route="/search-vet"
+            ></cards>
+            <cards
+              title="Novo Cadastro"
+              text="Não encontrou um Veterinário? Cadastre um novo veterinário aqui"
+              route="/form-vet"
+            ></cards>
+            <el-col :span="12">
+              <el-button
+                class="button"
+                @click="goToSearchVet"
+                type="success"
+                icon="el-icon-search"
+                circle
+              ></el-button>
+            </el-col>
+            <el-col :span="12">
+              <el-button
+                class="button"
+                @click="goToFormVet"
+                type="primary"
+                icon="el-icon-plus"
+                circle
+              ></el-button>
+            </el-col>
+          </el-row>
+        </div>
+      </div>
+      <div v-show="box">
+        <div class="rate">
+          <h5>Deixe sua avaliação</h5>
+          <el-rate v-model="value2" :colors="colors"> </el-rate>
+        </div>
+        <h4>TRAGA SEU PET PARA O VUE PET CLINIC</h4>
+        <div class="row">
+          <div class="col-3">
+            <img class="petshop" src="../assets/foto.jpeg" />
+          </div>
+          <div class="col-3">
+            <img class="petshop" src="../assets/dog2.jpg" />
+          </div>
+          <div class="col-3">
+            <img class="petshop" src="../assets/image.jpg" />
           </div>
         </div>
       </div>
+      <google-map />
+      <Footer> </Footer>
     </div>
-    <div v-show="dashboard">
-      <div class="box-card">
-        <h2>Cachorros</h2>
-        <el-row :gutter="12">
-          <Cards title="Pesquisar" text="Faça uma pesquisa por nome"> </Cards>
-          <Cards
-            title="Novo Cadastro"
-            text="Não encontrou um pet? Você pode cadastrar um novo pet aqui"
-          ></Cards>
-          <el-col :span="12">
-            <el-button
-              class="button"
-              @click="goToSearchDog"
-              type="success"
-              icon="el-icon-search"
-              circle
-            ></el-button>
-          </el-col>
-          <el-col :span="12">
-            <el-button
-              class="button"
-              @click="goToFormDog"
-              type="primary"
-              icon="el-icon-plus"
-              circle
-            ></el-button>
-          </el-col>
-        </el-row>
-      </div>
-      <div>
-        <h2>Veterinários</h2>
-        <el-row :gutter="12">
-          <Cards title="Pesquisar" text="Faça uma pesquisa por nome"> </Cards>
-          <Cards
-            title="Novo Cadastro"
-            text="Não encontrou um Veterinário? Você pode cadastrar um novo veterinário aqui"
-          ></Cards>
-          <el-col :span="12">
-            <el-button
-              class="button"
-              @click="goToSearchVet"
-              type="success"
-              icon="el-icon-search"
-              circle
-            ></el-button>
-          </el-col>
-          <el-col :span="12">
-            <el-button
-              class="button"
-              @click="goToFormVet"
-              type="primary"
-              icon="el-icon-plus"
-              circle
-            ></el-button>
-          </el-col>
-        </el-row>
-      </div>
-    </div>
-    <div class="rate">
-      Deixe sua avaliação <br />
-      <el-rate v-model="value2" :colors="colors"> </el-rate>
-    </div>
-
-    <el-carousel :interval="8000" type="card" height="300px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h4 class="medium">
-          <img src="../assets/dog2.jpg" class="image" />
-        </h4>
-      </el-carousel-item>
-    </el-carousel>
-    <google-map />
-    <Footer> </Footer>
   </div>
 </template>
 
@@ -159,6 +183,12 @@ export default {
           message: "Você está logado",
           type: "success",
         });
+      } else {
+        this.$notify({
+          title: "Erro",
+          message: "Usuário ou Senha Incorreto",
+          type: "danger",
+        });
       }
     },
     goToSearchDog() {
@@ -182,6 +212,11 @@ export default {
   padding: 20px;
   background-color: rgb(255, 255, 255);
 }
+
+h4 {
+  text-shadow: 1px 1px 1px grey;
+  font-color: #b0c4de;
+}
 .box-card {
   padding: 20px;
   margin: 20px;
@@ -190,25 +225,33 @@ export default {
   padding: 20px;
   margin: 20px;
   background-color: #b0c4de;
-  shadow: hover;
+}
+.button {
+  padding: 20px;
+  margin: 20px;
+  height: 40px;
+  width: 40px;
 }
 .rate {
-  padding: 30px;
-  margin: 30px;
+  padding: 20px;
+  margin: 20px;
 }
 
-.el-carousel__item h3 {
-  color: #8b95a1;
-  opacity: 0.75;
-  line-height: 500px;
-  margin: 0;
-}
+.petshop {
+  height: 280px;
+  width: 320px;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #8b95a1;
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+  animation: go-back 10s linear infinite;
 }
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+@keyframes go-back {
+  from {
+    transform: translateX(10px);
+  }
+  to {
+    transform: translateX(200px);
+  }
 }
 </style>

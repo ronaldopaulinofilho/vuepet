@@ -3,6 +3,7 @@
     <Header
       title="Cadastro de Pets"
       text="Cadastre os dados do Pet aqui:"
+      route="/"
     ></Header>
 
     <div class="form">

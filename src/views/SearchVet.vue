@@ -3,6 +3,7 @@
     <Header
       title="Pesquisa de Veterinários"
       text=" Encontre um veterinário pesquisando por nome"
+      route="/"
     ></Header>
 
     <el-card class="box-card">

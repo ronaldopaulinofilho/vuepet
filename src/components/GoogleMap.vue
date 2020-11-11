@@ -1,10 +1,5 @@
 <template>
   <div>
-    <div>
-      <h4>CONHEÇA NOSSA LOCALIZAÇÃO</h4>
-    </div>
-    <br />
-
     <gmap-map :center="center" :zoom="13.75" style="width: 100%; height: 400px">
       <gmap-marker
         :key="index"

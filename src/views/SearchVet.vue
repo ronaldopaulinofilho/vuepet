@@ -21,30 +21,20 @@
     </el-card>
 
     <div v-if="showedVet">
-      <el-card v-for="vet in vets" :key="vet.id">
+      <el-card class="showedvets" v-for="vet in vets" :key="vet.id">
         <img src="../assets/images.jpeg" class="image" />
-        <div style="padding: '20px">
+        <div>
           <span>Nome:{{ vet.nome }}</span>
           <div class="bottom clearfix">
             <span>CPF:{{ vet.cpf }} </span>
             <span>Idade:{{ calculate(vet.data) }} </span>
-            <span>Ver Pacientes:</span>
             <el-button
+              class="buttondogs"
               @click="getDogsInVet(vet.id)"
-              icon="el-icon-arrow-down"
-              circle=""
+              type="text"
             >
+              Ver Pacientes
             </el-button>
-            <ul>
-              <el-tag
-                @click="goToFormDog(dog.id)"
-                type="primary"
-                v-for="dog in dogsInVet(vet.id)"
-                :key="dog.id"
-              >
-                {{ dog.nome }}
-              </el-tag>
-            </ul>
           </div>
           <el-button
             class="button"
@@ -60,6 +50,19 @@
             icon="el-icon-delete"
             circle
           ></el-button>
+          <div class="row">
+            <ul>
+              <el-tag
+                class="tag"
+                @click="goToFormDog(dog.id)"
+                type="primary"
+                v-for="dog in dogsInVet(vet.id)"
+                :key="dog.id"
+              >
+                {{ dog.nome }}
+              </el-tag>
+            </ul>
+          </div>
         </div>
       </el-card>
     </div>
@@ -194,7 +197,7 @@ export default {
 <style scoped>
 .image {
   border-radius: 80%;
-  border: 2px solid;
+  border: 2px solid #9ad4e6;
   height: 100px;
   width: 100px;
   padding: 2px;
@@ -203,16 +206,42 @@ export default {
   height: 200px;
   width: 1000px;
   padding: 20px;
-  transition: 0.4s;
   margin-left: 200px;
   margin-right: 200px;
 }
-.card {
-  height: 200px;
-  width: 1000px;
+.showedvets {
+  height: 320px;
+  width: 800px;
   padding: 20px;
-  transition: 0.4s;
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: 290px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 1px #d7dadf;
+  font-family: "Tahoma";
+  animation: fade-in 2s;
+}
+@keyframes fade-in {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(100px);
+  }
+}
+.button {
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 50%;
+}
+.buttondogs {
+  border: 1px solid;
+  height: 40px;
+  width: 100px;
+}
+.tag {
+  cursor: pointer;
+  margin: 2px;
+  color: #9ad4e6;
+  width: 100px;
 }
 </style>

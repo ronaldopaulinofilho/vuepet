@@ -21,9 +21,9 @@
     </el-card>
 
     <div v-if="showedDog">
-      <el-card v-for="dog in dogs" :key="dog.id">
+      <el-card class="showeddogs" v-for="dog in dogs" :key="dog.id">
         <img src="../assets/card.png" class="image" />
-        <div style="padding: 20px">
+        <div>
           <span>Nome:{{ dog.nome }}</span>
           <div class="bottom clearfix">
             <span>Raça:{{ dog.raca }} </span>
@@ -134,7 +134,7 @@ export default {
 <style scoped>
 .image {
   border-radius: 80%;
-  border: 2px solid;
+  border: 2px solid #9ad4e6;
   height: 100px;
   width: 100px;
   padding: 2px;
@@ -147,16 +147,29 @@ export default {
   margin-left: 200px;
   margin-right: 200px;
 }
-.card {
-  height: 200px;
-  width: 1000px;
+.showeddogs {
+  height: 260px;
+  width: 800px;
   padding: 20px;
   transition: 0.4s;
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: 290px;
+  margin-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 2px #d7dadf;
+  font-family: "Tahoma";
+  animation: fade-in 2s;
+}
+@keyframes fade-in {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(100px);
+  }
 }
 .button {
-  padding: 20px;
+  padding: 10px;
   margin-top: 10px;
   border-radius: 50%;
 }

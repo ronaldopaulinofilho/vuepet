@@ -7,9 +7,9 @@
     ></Header>
 
     <div class="form">
-      <div class="showed-dog" v-show="showedDog">
-        Edite os dados do Pet selecionado:
-      </div>
+      <h4 class="showed-dog" v-show="showedDog">
+        Edite os Dados do Pet Selecionado:
+      </h4>
       <div class="row">
         <div class="col-6">
           <label> Nome:</label>
@@ -264,18 +264,20 @@ export default {
 .form {
   padding: 20px;
   margin: 20px;
-  margin-left: 140px;
+  margin-left: 150px;
 }
 .button {
   width: 100px;
   height: 40px;
-  margin-top: 20px;
+  margin: 20px;
   margin-left: 500px;
 }
 .showed-dog {
-  padding: 10px;
-  margin: 10px;
+  padding: 20px;
   margin-right: 100px;
   font-size: 14px;
+  text-shadow: 1px 1px 1px #b2c2df;
+  color: #ffffff;
+  background-color: #b0c4de;
 }
 </style>

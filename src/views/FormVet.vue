@@ -8,9 +8,9 @@
     </Header>
 
     <div class="form">
-      <div class="showed-vet" v-show="showedVet">
-        Edite os dados do Veterinário selecionado:
-      </div>
+      <h4 class="showed-vet" v-show="showedVet">
+        Edite os Dados do Veterinário Selecionado:
+      </h4>
       <div class="row">
         <div class="col-6">
           <label> Nome:</label>
@@ -74,7 +74,6 @@
         Deseja excluir o veterinário?
         <el-button
           @click="deleteVet(vet.id)"
-          plain
           type="danger"
           icon="el-icon-delete"
           circle
@@ -205,6 +204,13 @@ export default {
             message: "Veterinário Excluído com Sucesso",
             type: "success",
           });
+        } else {
+          this.$notify({
+            title: "Erro",
+            message: "Veterinário Possui Pets Cadastrados",
+            type: "error",
+          });
+          this.$router.push({ path: "search-vet" });
         }
       });
     },
@@ -225,9 +231,11 @@ export default {
   margin-left: 450px;
 }
 .showed-vet {
-  padding: 10px;
-  margin: 10px;
+  padding: 20px;
   margin-right: 150px;
   font-size: 14px;
+  text-shadow: 1px 1px 1px #b2c2df;
+  color: #ffffff;
+  background-color: #b0c4de;
 }
 </style>

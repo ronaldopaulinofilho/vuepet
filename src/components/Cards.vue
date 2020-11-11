@@ -38,5 +38,6 @@ export default {
 <style scoped>
 el-card {
   cursor: pointer;
+  border-radius: 20px;
 }
 </style>

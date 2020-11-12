@@ -11,7 +11,7 @@ Vue.use(ElementUI, { locale });
 Vue.use(VueTheMask);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyCGH9uJ33VU-SIHnVBPhpaS69SJWiQM5hk",
+    key: "",
     libraries: "places" // necessary for places input
   }
 });
